@@ -12,16 +12,30 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id        String  @id @default(uuid())
-  nick      String
-  avatar    String
+  id          String @id @default(uuid())
+  nick        String
+  daty        Week[]
+  avatar      String
   accessToken String
 }
 
+model Week {
+  id        String  @id
+  Poniedziałek    String
+  Wtorek   String
+  Środa String
+  Czwartek  String
+  Piątek    String
+  Sobota  String
+  Niedziela    String
+  User      User?   @relation(fields: [userId], references: [id])
+  userId    String?
+}
 
 model Event {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   name      String
   date      DateTime
   createdBy String
@@ -30,9 +44,9 @@ model Event {
 }
 
 model Vote {
-  id        String @id @default(uuid())
+  id        String  @id @default(uuid())
   eventId   String
   userId    String
   available Boolean
-  Event     Event  @relation(fields: [eventId], references: [id])
+  Event     Event   @relation(fields: [eventId], references: [id])
 }
