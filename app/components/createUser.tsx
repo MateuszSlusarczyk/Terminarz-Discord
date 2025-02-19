@@ -6,7 +6,7 @@ const CreateUser = () => {
   const [accessToken, setAccessToken] = useState("");
 
   const createUser = async () => {
-    const response = await fetch("/api/users", {
+    const response = await fetch("/api/addUser", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, avatar, accessToken, userId: "test-user" }),
