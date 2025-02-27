@@ -31,7 +31,6 @@ export const authOptions: NextAuthOptions = {
 
         session.user.name = discordUser.username;
         session.user.avatar = `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`;
-
         // Sprawdzenie czy użytkownik już istnieje
         const existingUser = await prisma.user.findUnique({
           where: { id: session.user.id },
@@ -44,8 +43,13 @@ export const authOptions: NextAuthOptions = {
               nick: session.user.name ?? "default_nick",
               avatar: session.user.avatar,
               accessToken: token.accessToken as string,
+              rola: "Gracz",
+              currentWeek: new Date().toISOString().split("T")[0],
             },
           });
+        }
+        else{
+          session.user.rola = existingUser.rola;
         }
       }
       return session;

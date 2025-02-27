@@ -8,8 +8,8 @@ const AuthButton = () => {
  
     return (
     session ? (
-        
-      <button onClick={() => signOut()}>Wyloguj</button>
+        ""
+      
     ) : (
       <button onClick={() => signIn()}>Zaloguj przez Discord</button>
     )

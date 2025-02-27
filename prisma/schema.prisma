@@ -17,36 +17,38 @@ model User {
   id          String @id @default(uuid())
   nick        String
   daty        Week[]
+  rola        String
   avatar      String
   accessToken String
+  currentWeek String
+
+  // Relacja jako gracz
+  KampanieGracza Kampania[] @relation(name: "GraczeKampanii")
+
+  // Relacja jako Mistrz Gry
+  KampanieMG Kampania[] @relation(name: "MistrzGryKampanii")
 }
 
 model Week {
-  id        String  @id
-  Poniedziałek    String
-  Wtorek   String
-  Środa String
-  Czwartek  String
-  Piątek    String
-  Sobota  String
+  id           String  @id
+  Poniedziałek String
+  Wtorek       String
+  Środa        String
+  Czwartek     String
+  Piątek       String
+  Sobota       String
   Niedziela    String
-  User      User?   @relation(fields: [userId], references: [id])
-  userId    String?
+  User         User?   @relation(fields: [userId], references: [id])
+  userId       String?
 }
 
-model Event {
-  id        String   @id @default(uuid())
-  name      String
-  date      DateTime
-  createdBy String
-  createdAt DateTime @default(now())
-  votes     Vote[]
-}
-
-model Vote {
-  id        String  @id @default(uuid())
-  eventId   String
-  userId    String
-  available Boolean
-  Event     Event   @relation(fields: [eventId], references: [id])
+model Kampania {
+  id                String   @id
+  Nazwa             String
+  Gracze            User[]   @relation(name: "GraczeKampanii")
+  MistrzGry         User     @relation(name: "MistrzGryKampanii", fields: [mistrzGryId], references: [id])
+  mistrzGryId       String
+  ZarezerwowanyDzien String
+  ZarezerwowanaGodzina  String
+  DataTerminu       String
 }
